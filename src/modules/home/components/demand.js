@@ -26,17 +26,12 @@ const getHighestFactor = (demand) => {
     }
 }
 
-const demandDisplay = ({demand, kitchenIndex}) => {
+const demandDisplay = ({demand}) => {
     const {daily, current} = demand
-    console.log(current)
     const dailyOverallText = overallToText(daily.overall)
     const currentOverallText = overallToText(current.overall)
     const highestCurrentFactor = getHighestFactor(current)
     const highestDailyFactor = getHighestFactor(daily)
-    const [colSize1,
-        colSize2] = kitchenIndex === 0
-        ? [6, 6]
-        : [6, 6]
     return (
         <div>
             <Row>
@@ -45,7 +40,7 @@ const demandDisplay = ({demand, kitchenIndex}) => {
                 }}>
                     {`Current Demand: ${currentOverallText}`}
                 </h3>
-                <Col xs={colSize1}>
+                <Col xs={6}>
                     <div
                         className='demandCircle'
                         style={{
@@ -53,7 +48,7 @@ const demandDisplay = ({demand, kitchenIndex}) => {
                         backgroundColor: `${overallTextColor[currentOverallText]}`
                     }}></div>
                 </Col>
-                <Col xs={colSize2}>
+                <Col xs={6}>
                     <Panel header='Highest Factor'>{highestCurrentFactor}</Panel>
                 </Col>
             </Row>
@@ -65,7 +60,7 @@ const demandDisplay = ({demand, kitchenIndex}) => {
                 }}>
                     {`Daily Demand: ${dailyOverallText}`}
                 </h3>
-                <Col xs={colSize1}>
+                <Col xs={6}>
                     <div
                         className='demandCircle'
                         style={{
@@ -73,7 +68,7 @@ const demandDisplay = ({demand, kitchenIndex}) => {
                         backgroundColor: `${overallTextColor[dailyOverallText]}`
                     }}></div>
                 </Col>
-                <Col xs={colSize2}>
+                <Col xs={6}>
                     <Panel header='Highest Factor'>{highestDailyFactor}</Panel>
                 </Col>
             </Row>

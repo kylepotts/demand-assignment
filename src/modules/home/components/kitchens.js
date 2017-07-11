@@ -39,14 +39,14 @@ const createKitchenComponents = (kitchenInfo, weather) => (kitchenInfo.result.ma
         .filter((w) => w.name === kitchen.name)
 
     const weatherForKitchen = grabRelevantWeatherInfo(darkSkyResponseForKitchen)
-    const demand = calculateDemand(weatherForKitchen, weather.date)
+    const demand = calculateDemand(weatherForKitchen, weather.date, weather.precipThreshold)
     return (
         <Col key={kitchen.id} xs={6} className={`contentCool-${i}`}>
             <Panel header={< h2 > {
                 kitchen.city
             } < /h2>}>
                 <Weather weatherForKitchen={weatherForKitchen}/>
-                <Demand demand={demand} kitchenIndex={i}/>
+                <Demand demand={demand}/>
             </Panel>
         </Col>
     )

@@ -13,6 +13,7 @@ class Home extends React.Component {
     getKitchenInfo: () => Promise < any >,
     getWeatherForLocation: ({date: string, lat: string, lng: string, location: string}) => Promise < any >,
     changeDate: () => Promise < any >,
+    changePrecipThreshold: () => Promise < any >,
     kitchenInfo: {
       isLoading: boolean,
       success: boolean,
@@ -45,12 +46,16 @@ class Home extends React.Component {
     }
   }
   render() {
-    const {weather, changeDate, kitchenInfo} = this.props;
+    const {weather, changeDate, kitchenInfo, changePrecipThreshold} = this.props;
     const selectedDate = weather.date;
     return (
       <div>
         <Grid>
-          <DateDisplay date={selectedDate} onDateChange={changeDate}/>
+          <DateDisplay
+            date={selectedDate}
+            onDateChange={changeDate}
+            precipThreshold={weather.precipThreshold}
+            onChangeThreshold={changePrecipThreshold}/>
           <Kitchens kitchenInfo={kitchenInfo} weather={weather}/>
         </Grid>
       </div>

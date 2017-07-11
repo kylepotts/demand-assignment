@@ -29,16 +29,16 @@ const calculateDayFactors = (date) => {
     return {day, dayFactor, endOfMonthFactor}
 }
 
-const calculateWeatherFactors = (weatherForKitchen) => {
+const calculateWeatherFactors = (weatherForKitchen, precipThreshold) => {
     const currentPrecipType = get(weatherForKitchen, 'precipTypeHour', 'none')
     const dailyPrecipType = get(weatherForKitchen, 'precipTypeDay', 'none')
     const currentPrecipProb = get(weatherForKitchen, 'precipProbDay', 0)
     const dailyPrecipProb = get(weatherForKitchen, 'precipProbHour', 0)
-    const currentWeatherFactor = currentPrecipProb >= .30
+    const currentWeatherFactor = currentPrecipProb >= precipThreshold
         ? get(demandFactors.weather, currentPrecipType, 0)
         : 0
 
-    const dailyWeatherFactor = dailyPrecipProb >= .30
+    const dailyWeatherFactor = dailyPrecipProb >= precipThreshold
         ? get(demandFactors.weather, dailyPrecipType, 0)
         : 0
 
@@ -67,13 +67,11 @@ const highestFactorDetail = (factors, precipType, day) => {
     } else if (highestFactor === 'endOfMonthFactor') {
         return `End Of The Month`
     } else if (highestFactor === 'weatherFactor') {
-        const p = precipType[0]
-        console.log(p)
         return precipType
     }
 }
 
-const calculateDemand = (weatherForKitchen, date) => {
+const calculateDemand = (weatherForKitchen, date, precipThreshold) => {
     const {day, dayFactor, endOfMonthFactor} = calculateDayFactors(date)
 
     const {
@@ -83,7 +81,7 @@ const calculateDemand = (weatherForKitchen, date) => {
         currentNiceWeather,
         dailyWeatherFactor,
         dailyNiceWeather
-    } = calculateWeatherFactors(weatherForKitchen)
+    } = calculateWeatherFactors(weatherForKitchen, precipThreshold)
 
     const dayFactors = dayFactor + endOfMonthFactor
     const overallCurrentFactor = dayFactors + currentWeatherFactor + currentNiceWeather

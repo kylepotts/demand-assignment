@@ -1,10 +1,11 @@
-import {GET_WEATHER, CHANGE_DATE} from '../actions/types/weatherActionTypes'
+import {GET_WEATHER, CHANGE_DATE, CHANGE_PRECIP_THRESHOLD} from '../actions/types/weatherActionTypes'
 import Moment from 'moment'
 const initalState = {
     result: [],
     isLoading: false,
     success: false,
-    date: Moment().format('YYYY-MM-DDTHH:mm:ss')
+    date: Moment().format('YYYY-MM-DDTHH:mm:ss'),
+    precipThreshold: .3
 }
 
 export default(state = initalState, action) => {
@@ -31,6 +32,11 @@ export default(state = initalState, action) => {
                 date: action
                     .payload
                     .format('YYYY-MM-DDTHH:mm:ss')
+            }
+        case CHANGE_PRECIP_THRESHOLD:
+            return {
+                ...state,
+                precipThreshold: action.payload
             }
         default:
             return state

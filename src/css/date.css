@@ -1,3 +1,5 @@
 .DateInput {
-    display: inline-table
+    display: inline-table;
+    width: 300px;
+    text-align: center;
 }

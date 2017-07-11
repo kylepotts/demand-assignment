@@ -1,4 +1,4 @@
-import {GET_WEATHER, CHANGE_DATE} from '../types/weatherActionTypes'
+import {GET_WEATHER, CHANGE_DATE, CHANGE_PRECIP_THRESHOLD} from '../types/weatherActionTypes'
 import weatherService from '../../services/weatherService'
 
 export const getWeatherForLocation = (locations) => {
@@ -40,3 +40,8 @@ export const changeDate = (date) => {
         })
     }
 }
+
+export const changePrecipThreshold = (threshold) => ({
+    type: CHANGE_PRECIP_THRESHOLD,
+    payload: threshold / 100
+})
