@@ -63,11 +63,13 @@ const calculateWeatherFactors = (weatherForKitchen) => {
 const highestFactorDetail = (factors, precipType, day) => {
     const highestFactor = maxBy(keys(factors), (o) => factors[o])
     if (highestFactor === 'dayFactor') {
-        return `The highest factor for demand is the day because it is ${day}`
+        return `${day}`
     } else if (highestFactor === 'endOfMonthFactor') {
-        return `The highest factor for demand is that it is the end of the month`
+        return `End Of The Month`
     } else if (highestFactor === 'weatherFactor') {
-        return `The highest factor for demand is the weather which is forcasting ${precipType}`
+        const p = precipType[0]
+        console.log(p)
+        return precipType
     }
 }
 

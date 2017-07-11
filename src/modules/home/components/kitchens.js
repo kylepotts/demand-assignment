@@ -1,5 +1,5 @@
 import React from 'react'
-import {Row, Col} from 'react-bootstrap'
+import {Row, Col, Panel} from 'react-bootstrap'
 import {get} from 'lodash'
 import Weather from './weather'
 import Demand from './demand'
@@ -40,22 +40,14 @@ const createKitchenComponents = (kitchenInfo, weather) => (kitchenInfo.result.ma
 
     const weatherForKitchen = grabRelevantWeatherInfo(darkSkyResponseForKitchen)
     const demand = calculateDemand(weatherForKitchen, weather.date)
-    const extendedStyle = i === 0
-        ? {
-            ...styles.centerColumn,
-            marginleft: 24,
-            width: '54%'
-        }
-        : styles.centerColumn
     return (
-        <Col key={kitchen.id} style={{
-            ...extendedStyle
-        }}>
-            <Row>
-                <h2>{kitchen.city}</h2>
-            </Row>
-            <Weather weatherForKitchen={weatherForKitchen}/>
-            <Demand demand={demand}/>
+        <Col key={kitchen.id} xs={6} className={`contentCool-${i}`}>
+            <Panel header={< h2 > {
+                kitchen.city
+            } < /h2>}>
+                <Weather weatherForKitchen={weatherForKitchen}/>
+                <Demand demand={demand} kitchenIndex={i}/>
+            </Panel>
         </Col>
     )
 }))

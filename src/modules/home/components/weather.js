@@ -3,7 +3,13 @@ import {Row, Col} from 'react-bootstrap'
 import SkyCons from 'react-skycons'
 const weatherDisplay = ({weatherForKitchen}) => {
     return (
-        <div>
+        <div
+            className='weatherDisplay'
+            style={{
+            display: 'flex',
+            alignContent: 'center',
+            justifyContent: 'center'
+        }}>
             <Row style={{
                 marginLeft: -30
             }}>
