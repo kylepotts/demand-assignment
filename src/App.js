@@ -30,7 +30,6 @@ const App = () => (
     </Navbar>
     <div>
       <Route exact path="/" component={Home}/>
-      <Route path="/location/:locationName" component={Home}/>
     </div>
   </div>
 )
