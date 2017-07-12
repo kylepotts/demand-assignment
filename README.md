@@ -17,3 +17,5 @@ To start in prod mode
 1. npm install
 2. npm run build
 3. There should be a build folder which you can use any old HTTP Server to host that directory ( python2.7 -m SimpleHTTPServer 80)
+
+See a live version [here](https://clustertruck-weather-demand.herokuapp.com/)
