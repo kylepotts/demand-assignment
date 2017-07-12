@@ -1,31 +1,15 @@
-// @flow
 import React from 'react'
 import {connect} from 'react-redux'
 import {compose, pure} from 'recompose';
 import * as kitchenActions from '../../../actions/creators/kitchenActions'
 import * as weatherActions from '../../../actions/creators/weatherActions'
-import {Grid, Row, Col} from 'react-bootstrap'
+import {Grid} from 'react-bootstrap'
 import DateDisplay from '../components/date'
 import Kitchens from '../components/kitchens'
+import Halogen from 'halogen'
+import PropTypes from 'prop-types'
 
 class Home extends React.Component {
-  props : {
-    getKitchenInfo: () => Promise < any >,
-    getWeatherForLocation: ({date: string, lat: string, lng: string, location: string}) => Promise < any >,
-    changeDate: () => Promise < any >,
-    changePrecipThreshold: () => Promise < any >,
-    kitchenInfo: {
-      isLoading: boolean,
-      success: boolean,
-      result: Array < any >
-    },
-    weather: {
-      isLoading: boolean,
-      success: boolean,
-      date: string,
-      result: any
-    }
-  }
   componentWillMount() {
     const {getKitchenInfo} = this.props
     getKitchenInfo()
@@ -48,19 +32,43 @@ class Home extends React.Component {
   render() {
     const {weather, changeDate, kitchenInfo, changePrecipThreshold} = this.props;
     const selectedDate = weather.date;
-    return (
-      <div>
-        <Grid>
-          <DateDisplay
-            date={selectedDate}
-            onDateChange={changeDate}
-            precipThreshold={weather.precipThreshold}
-            onChangeThreshold={changePrecipThreshold}/>
-          <Kitchens kitchenInfo={kitchenInfo} weather={weather}/>
-        </Grid>
-      </div>
-    )
+    if (!weather.isLoading && !kitchenInfo.isLoading) {
+      return (
+        <div>
+          <Grid>
+            <DateDisplay
+              date={selectedDate}
+              onDateChange={changeDate}
+              precipThreshold={weather.precipThreshold}
+              onChangeThreshold={changePrecipThreshold}/>
+            <Kitchens kitchenInfo={kitchenInfo} weather={weather}/>
+          </Grid>
+        </div>
+      )
+    } else {
+      return (
+        <div
+          className='loader'
+          style={{
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: 400
+        }}>
+          <Halogen.MoonLoader color='black'/>
+        </div>
+      )
+    }
+
   }
+}
+
+Home.propTypes = {
+  weather: PropTypes
+    .shape({result: PropTypes.array.isRequired, isLoading: PropTypes.bool.isRequired, success: PropTypes.bool.isRequired, date: PropTypes.string.isRequired, precipThreshold: PropTypes.number.isRequired})
+    .isRequired,
+  changeDate: PropTypes.func.isRequired,
+  changePrecipThreshold: PropTypes.func.isRequired,
+  kitcheInfo: PropTypes.shape({result: PropTypes.array.isRequired, isLoading: PropTypes.bool.isRequired, success: PropTypes.bool.isRequired})
 }
 
 export default compose(connect((state) => ({kitchenInfo: state.kitchenInfo, weather: state.weather}), {

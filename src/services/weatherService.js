@@ -1,16 +1,17 @@
 import jsonp from 'jsonp-promise'
-import moment from 'moment'
-const darkSkyKey = process.env.DARK_SKY_KEY || 'aa9c3eff25e201e633994f3666cc0443'
+const darkSkyKey = 'aa9c3eff25e201e633994f3666cc0443'
+// this is not good and insecure. It would be better to use a tool like Vault or
+// have the server pass this over https
 
 const weatherService = {
     getWeather: ({date, lat, lng}) => {
         return jsonp(`https://api.darksky.net/forecast/${darkSkyKey}/${lat},${lng},${date}`).promise
     },
-    getWeather1: () => {
+    getWeatherDebug: () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(100)
-            }, 1000)
+            }, 100000)
         })
     }
 }

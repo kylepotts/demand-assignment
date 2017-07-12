@@ -4,14 +4,7 @@ import {get} from 'lodash'
 import Weather from './weather'
 import Demand from './demand'
 import calculateDemand from '../../../utils/calculateDemand'
-
-const styles = {
-    centerColumn: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column'
-    }
-}
+import PropTypes from 'prop-types'
 
 const grabRelevantWeatherInfo = (darkSkyResponseForKitchen) => {
     const daily = get(darkSkyResponseForKitchen, '[0].darkSkyResponse.daily.data[0]', {})
@@ -64,5 +57,10 @@ const Kitchens = ({kitchenInfo, weather}) => {
         </Row>
     )
 }
-
+Kitchens.propTypes = {
+    kitchenInfo: PropTypes.shape({result: PropTypes.array.isRequired, isLoading: PropTypes.bool.isRequired, success: PropTypes.bool.isRequired}),
+    weather: PropTypes
+        .shape({result: PropTypes.array.isRequired, isLoading: PropTypes.bool.isRequired, success: PropTypes.bool.isRequired, date: PropTypes.string.isRequired, precipThreshold: PropTypes.number.isRequired})
+        .isRequired
+}
 export default Kitchens

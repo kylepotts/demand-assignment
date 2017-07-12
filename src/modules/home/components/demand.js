@@ -1,6 +1,7 @@
 import React from 'react'
-import {Row, Col, ListGroup, ListGroupItem, Panel} from 'react-bootstrap'
+import {Row, Col, Panel} from 'react-bootstrap'
 import '../../../css/demand.css'
+import PropTypes from 'prop-types'
 const overallTextColor = {
     Low: '#005377',
     Normal: '#06A77D',
@@ -40,7 +41,7 @@ const demandDisplay = ({demand}) => {
                 }}>
                     {`Current Demand: ${currentOverallText}`}
                 </h3>
-                <Col xs={6}>
+                <Col className='circleCol' xs={4}>
                     <div
                         className='demandCircle'
                         style={{
@@ -48,8 +49,8 @@ const demandDisplay = ({demand}) => {
                         backgroundColor: `${overallTextColor[currentOverallText]}`
                     }}></div>
                 </Col>
-                <Col xs={6}>
-                    <Panel header='Highest Factor'>{highestCurrentFactor}</Panel>
+                <Col className='factorPanel' xs={8}>
+                    <Panel header='Highest Factor'>{highestCurrentFactor[0].toUpperCase() + highestCurrentFactor.slice(1)}</Panel>
                 </Col>
             </Row>
             <Row style={{
@@ -60,7 +61,7 @@ const demandDisplay = ({demand}) => {
                 }}>
                     {`Daily Demand: ${dailyOverallText}`}
                 </h3>
-                <Col xs={6}>
+                <Col className='circleCol' xs={4}>
                     <div
                         className='demandCircle'
                         style={{
@@ -68,12 +69,26 @@ const demandDisplay = ({demand}) => {
                         backgroundColor: `${overallTextColor[dailyOverallText]}`
                     }}></div>
                 </Col>
-                <Col xs={6}>
-                    <Panel header='Highest Factor'>{highestDailyFactor}</Panel>
+                <Col className='factorPanel' xs={8}>
+                    <Panel header='Highest Factor'>{highestDailyFactor[0].toUpperCase() + highestDailyFactor.slice(1)}</Panel>
                 </Col>
             </Row>
         </div>
     )
+}
+
+const factorShape = PropTypes.shape({
+    dayFactor: PropTypes.number.isRequired,
+    endOfMonthFactor: PropTypes.number.isRequired,
+    highest: PropTypes.string.isRequired,
+    niceWeatherFactor: PropTypes.number.isRequired,
+    overall: PropTypes.number.isRequired,
+    weatherFactor: PropTypes.number.isRequired
+})
+
+demandDisplay.propTypes = {
+    daily: factorShape,
+    current: factorShape
 }
 
 export default demandDisplay

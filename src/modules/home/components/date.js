@@ -6,6 +6,7 @@ import NumericInput from 'react-numeric-input'
 import 'react-dates/lib/css/_datepicker.css';
 import '../../../css/date.css'
 import {get} from 'lodash'
+import PropTypes from 'prop-types'
 const styles = {
     centerColumn: {
         display: 'flex',
@@ -22,11 +23,19 @@ class DateDisplay extends React.Component {
             }}>
                 <Row>
                     <Col style={styles.centerColumn}>
+                        <h4>
+                            Click below to change the date
+                        </h4>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={styles.centerColumn}>
                         <SingleDatePicker
                             date={moment(date)}
                             onDateChange={onDateChange}
                             focused={calendarFocused}
                             displayFormat={'dddd MMMM Do YYYY'}
+                            numberOfMonths={1}
                             onFocusChange={({focused}) => this.setState({focused})}/>
                     </Col>
                 </Row>
@@ -35,6 +44,7 @@ class DateDisplay extends React.Component {
                         <NumericInput
                             style={{
                             input: {
+                                height: 50,
                                 width: 300
                             }
                         }}
@@ -48,6 +58,13 @@ class DateDisplay extends React.Component {
             </div>
         )
     }
+}
+
+DateDisplay.propTypes = {
+    date: PropTypes.string.isRequired,
+    onDateChange: PropTypes.func.isRequired,
+    onChangeThreshold: PropTypes.func.isRequired,
+    precipThreshold: PropTypes.number.isRequired
 }
 
 export default DateDisplay

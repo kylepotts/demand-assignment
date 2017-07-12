@@ -7,7 +7,6 @@ const initalState = {
 }
 
 export default(state = initalState, action) => {
-    console.log(action)
     switch (action.type) {
         case `${GET_KITCHEN_INFO}_LOADING`:
             return {

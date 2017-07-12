@@ -1,6 +1,7 @@
 import React from 'react'
 import {Row, Col} from 'react-bootstrap'
 import SkyCons from 'react-skycons'
+import PropTypes from 'prop-types'
 const weatherDisplay = ({weatherForKitchen}) => {
     return (
         <div
@@ -18,6 +19,7 @@ const weatherDisplay = ({weatherForKitchen}) => {
                             style={{
                             width: 200
                         }}
+                            className='weatherIcon'
                             color='cyan'
                             icon={weatherForKitchen
                             .iconCurrent
@@ -35,6 +37,11 @@ const weatherDisplay = ({weatherForKitchen}) => {
             </Row>
         </div>
     )
+}
+
+weatherDisplay.propTypes = {
+    iconCurrent: PropTypes.string,
+    tempCurrent: PropTypes.number
 }
 
 export default weatherDisplay
